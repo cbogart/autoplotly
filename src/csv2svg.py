@@ -31,6 +31,11 @@ def main(csvfiles, horizontal, vertical, title, color, output,label,filter):
         filter = lambda row: str(row[key]) in vals
     else:
         filter = lambda row: True
+    if label is not None:
+        labels = label.split(",")
+        labelf = lambda row: "/".join([str(row.get(lbl,"?")) for lbl in labels])
+    else:
+        labelf = lambda row: ""
     for csvfile in csvfiles:
         incsv = csv.DictReader(csvfile)
         for row in incsv:
@@ -39,8 +44,8 @@ def main(csvfiles, horizontal, vertical, title, color, output,label,filter):
             vtick = row[vertical]
             if not filter(row): continue
             vert[vtick]["x"].append(time)
-            if label is not None and label in row:
-                vert[vtick]["label"].append(row[label])
+            if label is not None:
+                vert[vtick]["label"].append(labelf(row))
             else:
                 vert[vtick]["label"].append(None)
             if color is not None and color in row:
