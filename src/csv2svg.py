@@ -47,7 +47,7 @@ def main(csvfiles, horizontal, vertical, title, color, output,label,filter):
                 vert[vtick]["color"].append(ColorHash(row[color]).hex)
             else:
                 vert[vtick]["color"].append(None)
-    data = [go.Scatter(x=vert[vtick]["x"], text=vert[vtick]["label"], y=[vtick + random()*.3 for item in vert[vtick]["x"]], 
+    data = [go.Scatter(x=vert[vtick]["x"], text=vert[vtick]["label"], y=[vtick  for item in vert[vtick]["x"]], 
               marker = { "color": vert[vtick]["color"]}, mode="markers", name=vtick) for vtick in sorted(vert.keys())]        
     plotly.offline.plot({"data": data},{"title": title}, filename=output, auto_open=True)
 
